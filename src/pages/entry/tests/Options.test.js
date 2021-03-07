@@ -1,9 +1,8 @@
-import { render, screen } from "@testing-library/react";
-
+import { render, screen } from "../../../test-utils/testing-library-utils";
 import Options from "../Options";
 
 describe("Scoops and Toppings Opts", () => {
-  it("Should display image from each scoop opt from server", async () => {
+  test("Should display image from each scoop opt from server", async () => {
     render(<Options optionType="scoops" />);
 
     const scoopImages = await screen.findAllByRole("img", { name: /scoop$/i });
