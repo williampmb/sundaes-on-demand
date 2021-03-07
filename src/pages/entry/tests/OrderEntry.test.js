@@ -10,12 +10,6 @@ import Options from "../Options";
 import userEvent from "@testing-library/user-event";
 
 describe("Grand total tests", () => {
-  it("Grand total starts at $0.00", () => {
-    render(<OrderEntry />);
-
-    const grandTotal = screen.getByRole("heading", { name: /grand total/i });
-  });
-
   it("Grand total updates if scoop is added first", async () => {
     render(<OrderEntry />);
     const grandTotal = screen.getByText("Grand total", { exact: false });
@@ -160,12 +154,12 @@ describe("subtotal updates tests", () => {
 describe("Testing alerts", () => {
   it("Should handle erros for scoops and toppings routes", async () => {
     server.resetHandlers(
-      rest.get("http://localhost:3030/scoops", (req, res, ctx) => {
-        res(ctx.status(500));
-      }),
-      rest.get("http://localhost:3030/toppings", (req, res, ctx) => {
-        res(ctx.status(500));
-      })
+      rest.get("http://localhost:3030/scoops", (req, res, ctx) =>
+        res(ctx.status(500))
+      ),
+      rest.get("http://localhost:3030/toppings", (req, res, ctx) =>
+        res(ctx.status(500))
+      )
     );
 
     render(<OrderEntry />);
