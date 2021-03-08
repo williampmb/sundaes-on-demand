@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
 import Options from "./Options";
 import { useOrderDetails } from "../../contexts/OrderDetails";
 import Button from "react-bootstrap/Button";
 
 const OrderEntry = ({ setOrderPhase }) => {
-  const [orderDetails, updateItemCount] = useOrderDetails();
-  //console.log("orderdetails TOTALS", orderDetails.totals);
+  const [orderDetails] = useOrderDetails();
+  const orderDisabled = orderDetails.totals.scoops === "$0.00";
+
   return (
     <>
       <div>
@@ -14,6 +16,7 @@ const OrderEntry = ({ setOrderPhase }) => {
       <h2>Grand total: {orderDetails.totals.grandTotal}</h2>
       <Button
         variant="primary"
+        disabled={orderDisabled}
         onClick={() => {
           setOrderPhase("review");
         }}

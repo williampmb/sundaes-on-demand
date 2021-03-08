@@ -9,6 +9,45 @@ import { server } from "../../../mocks/server";
 import Options from "../Options";
 import userEvent from "@testing-library/user-event";
 
+function addValue(components) {
+  let sum = 0;
+  for (const comp of components) {
+    sum += parseInt(comp.value);
+  }
+  return sum;
+}
+
+describe("Disable button when no scoops", () => {
+  it.only("Should disable Order Sundae Btn when no scoops selected", async () => {
+    render(<OrderEntry setOrderPhase={jest.fn()} />);
+
+    let scoopOpts;
+    await waitFor(async () => {
+      scoopOpts = await screen.findAllByRole("spinbutton");
+      expect(scoopOpts).toHaveLength(2);
+    });
+    let scoopsCount = addValue(scoopOpts);
+    expect(scoopsCount).toBe(0);
+
+    const btnOrderSundae = await screen.findByRole("button", {
+      name: /order sundae/i,
+    });
+    expect(btnOrderSundae).toBeDisabled();
+
+    userEvent.clear(scoopOpts[0]);
+    userEvent.type(scoopOpts[0], "2");
+
+    scoopsCount = addValue(scoopOpts);
+
+    expect(scoopsCount).toBeGreaterThan(0);
+    expect(btnOrderSundae).toBeEnabled();
+
+    userEvent.clear(scoopOpts[0]);
+    userEvent.type(scoopOpts[0], "0");
+
+    expect(btnOrderSundae).toBeDisabled();
+  });
+});
 describe("Grand total tests", () => {
   it("Grand total updates if scoop is added first", async () => {
     render(<OrderEntry />);
