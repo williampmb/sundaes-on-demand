@@ -46,11 +46,21 @@ describe("Order Phases Path", () => {
     expect(btnConfirmOrder).toBeEnabled();
     userEvent.click(btnConfirmOrder);
 
-    // confirm order number on confirmation page and go to the next phasae
+    // find loading info
+    const loading = screen.getByText(/loading/i);
+    expect(loading).toBeInTheDocument();
+
+    // confirm order number on confirmation page
     const orderNumberPhrase = await screen.findByText(/your order number/i);
     const orderNumber = orderNumberPhrase.innerHTML.split(" ").pop();
     expect(orderNumber).not.toBeNaN();
 
+    // Check if Loading disappear
+    const nullLoading = screen.queryByText(/loading/i);
+
+    expect(nullLoading).not.toBeInTheDocument();
+
+    // go to the next phasae
     const btnNewOrder = await screen.findByRole("button", {
       name: /create new order/i,
     });
