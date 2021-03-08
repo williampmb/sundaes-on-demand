@@ -39,7 +39,6 @@ const SummaryForm = ({ setOrderPhase }) => {
       </Form.Group>
       <Button
         variant="primary"
-        type="submit"
         disabled={!cbTermsConditionDisable}
         onClick={() => handleConfirmOrder()}
       >

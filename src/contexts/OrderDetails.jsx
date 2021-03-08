@@ -57,9 +57,23 @@ function OrderDetailsProvider(props) {
       optionCountsMap.set(itemName, parseInt(newItemCount));
       setOptionCounts(newOptionCounts);
     }
+    function resetOrder() {
+      const resetOptionCounts = {
+        scoops: new Map(),
+        toppings: new Map(),
+      };
+      const resetTotals = {
+        scoops: formatCurrency(0),
+        toppings: formatCurrency(0),
+        grandTotal: formatCurrency(0),
+      };
+      setOptionCounts(resetOptionCounts);
+      setTotals(resetTotals);
+    }
+
     //getter: object containing options counts for scoops and toppings, subtotal and totals
     //setter: updateOptionCount
-    return [{ ...optionCounts, totals }, updateItemCount];
+    return [{ ...optionCounts, totals }, updateItemCount, resetOrder];
   }, [optionCounts, totals]);
 
   return <OrderDetails.Provider value={value} {...props} />;

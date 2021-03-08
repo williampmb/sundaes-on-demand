@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useOrderDetails } from "../../contexts/OrderDetails";
 
 const OrderConfirmation = ({ setOrderPhase }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderNumber, setOrderNumber] = useState(0);
+  const [orderDetails, updateItemCount, resetOrder] = useOrderDetails();
+
   useEffect(() => {
     fetch("http://localhost:3030/order", {
       method: "POST",
@@ -10,11 +13,9 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       body: {},
     })
       .then((resp) => {
-        console.log("SERVER MOCK RESP", resp);
         return resp.json();
       })
       .then((data) => {
-        console.log(data);
         setOrderNumber(data.orderNumber);
         setIsLoading(false);
       });
@@ -28,7 +29,12 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       <h2>Thank you!</h2>
       <p>Your order number is {orderNumber}</p>
       <p>as per our terms and conditions, nothing will happen now</p>
-      <button onClick={() => setOrderPhase("inProgress")}>
+      <button
+        onClick={() => {
+          setOrderPhase("inProgress");
+          resetOrder();
+        }}
+      >
         Create new order
       </button>
     </>

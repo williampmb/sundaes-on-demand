@@ -17,13 +17,10 @@ function App() {
         {orderPhase === "review" && (
           <OrderSummary setOrderPhase={setOrderPhase} />
         )}
-
-        {/* Summary page and entry page need provider*/}
+        {orderPhase === "complete" && (
+          <OrderConfirmation setOrderPhase={setOrderPhase} />
+        )}
       </OrderDetailsProvider>
-      {/* confirmation page does not need provider */}
-      {orderPhase === "complete" && (
-        <OrderConfirmation setOrderPhase={setOrderPhase} />
-      )}
     </Container>
   );
 }

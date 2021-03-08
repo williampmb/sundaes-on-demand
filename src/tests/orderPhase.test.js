@@ -49,7 +49,6 @@ describe("Order Phases Path", () => {
     // confirm order number on confirmation page and go to the next phasae
     const orderNumberPhrase = await screen.findByText(/your order number/i);
     const orderNumber = orderNumberPhrase.innerHTML.split(" ").pop();
-    console.log("WHAT IT IS ", orderNumber);
     expect(orderNumber).not.toBeNaN();
 
     const btnNewOrder = await screen.findByRole("button", {
@@ -59,15 +58,11 @@ describe("Order Phases Path", () => {
 
     // check that scoops and toppings have been reset
 
-    const scoopOptAgain = await screen.findByRole("spinbutton", {
-      name: /chocolate/i,
-    });
+    const scoopOptAgain = await screen.findByText(/Scoops total/i);
 
     const toppingOptAgain = await screen.findByRole("checkbox", {
       name: /hot fudge/i,
     });
-
-    screen.debug();
 
     expect(scoopOptAgain).toHaveTextContent("0");
     expect(toppingOptAgain).not.toBeChecked();
