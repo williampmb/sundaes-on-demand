@@ -18,7 +18,7 @@ function addValue(components) {
 }
 
 describe("Disable button when no scoops", () => {
-  it.only("Should disable Order Sundae Btn when no scoops selected", async () => {
+  it("Should disable Order Sundae Btn when no scoops selected", async () => {
     render(<OrderEntry setOrderPhase={jest.fn()} />);
 
     let scoopOpts;
