@@ -3,7 +3,30 @@ import userEvent from "@testing-library/user-event";
 import App from "../App";
 
 describe("Order Phases Path", () => {
-  it.only("Gold path: pick, review and confirm order", async () => {
+  it("Should not render toppings in summary if there is no toppings", async () => {
+    render(<App></App>);
+
+    const chocScoop = await screen.findByRole("spinbutton", {
+      name: /chocolate/i,
+    });
+    userEvent.clear(chocScoop);
+    userEvent.type(chocScoop, "3");
+
+    const btnOrderSundae = screen.getByRole("button", {
+      name: /order sundae/i,
+    });
+    userEvent.click(btnOrderSundae);
+
+    const chocSummary = screen.getByText(/3 chocolate/i);
+    expect(chocSummary).toBeInTheDocument();
+
+    const toppingsSummary = screen.queryByRole("heading", {
+      name: /toppings/i,
+    });
+    expect(toppingsSummary).not.toBeInTheDocument();
+  });
+
+  it("Gold path: pick, review and confirm order", async () => {
     // render app
     render(<App></App>);
 
