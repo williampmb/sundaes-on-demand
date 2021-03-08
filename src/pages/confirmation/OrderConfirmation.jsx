@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useOrderDetails } from "../../contexts/OrderDetails";
+import Button from "react-bootstrap/Button";
 
 const OrderConfirmation = ({ setOrderPhase }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderNumber, setOrderNumber] = useState(0);
-  const [orderDetails, updateItemCount, resetOrder] = useOrderDetails();
+  const [, , resetOrder] = useOrderDetails();
 
   useEffect(() => {
     fetch("http://localhost:3030/order", {
@@ -25,19 +26,19 @@ const OrderConfirmation = ({ setOrderPhase }) => {
     return <p>Loading</p>;
   }
   return (
-    <>
+    <div style={{ textAlign: "center" }}>
       <h2>Thank you!</h2>
       <p>Your order number is {orderNumber}</p>
       <p>as per our terms and conditions, nothing will happen now</p>
-      <button
+      <Button
         onClick={() => {
           setOrderPhase("inProgress");
           resetOrder();
         }}
       >
         Create new order
-      </button>
-    </>
+      </Button>
+    </div>
   );
 };
 

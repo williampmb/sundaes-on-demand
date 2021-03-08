@@ -3,7 +3,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import axios from "axios";
 
 const SummaryForm = ({ setOrderPhase }) => {
   const [cbTermsConditionDisable, setCheckboxTermsCondition] = useState(false);
@@ -23,12 +22,14 @@ const SummaryForm = ({ setOrderPhase }) => {
     </span>
   );
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = (event) => {
+    event.preventDefault();
+
     setOrderPhase("complete");
   };
 
   return (
-    <Form>
+    <Form onSubmit={handleConfirmOrder}>
       <Form.Group controlId="terms-and-conditions">
         <Form.Check
           type="checkbox"
@@ -38,9 +39,9 @@ const SummaryForm = ({ setOrderPhase }) => {
         />
       </Form.Group>
       <Button
+        type="submit"
         variant="primary"
         disabled={!cbTermsConditionDisable}
-        onClick={() => handleConfirmOrder()}
       >
         Confirm order
       </Button>

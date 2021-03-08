@@ -8,18 +8,24 @@ import OrderConfirmation from "./pages/confirmation/OrderConfirmation";
 function App() {
   const [orderPhase, setOrderPhase] = useState("inProgress");
 
+  let Component = OrderEntry;
+  switch (orderPhase) {
+    case "inProgress":
+      Component = OrderEntry;
+      break;
+    case "review":
+      Component = OrderSummary;
+      break;
+    case "complete":
+      Component = OrderConfirmation;
+      break;
+    default:
+  }
+
   return (
     <Container>
       <OrderDetailsProvider>
-        {orderPhase === "inProgress" && (
-          <OrderEntry setOrderPhase={setOrderPhase} />
-        )}
-        {orderPhase === "review" && (
-          <OrderSummary setOrderPhase={setOrderPhase} />
-        )}
-        {orderPhase === "complete" && (
-          <OrderConfirmation setOrderPhase={setOrderPhase} />
-        )}
+        <Component setOrderPhase={setOrderPhase} />
       </OrderDetailsProvider>
     </Container>
   );

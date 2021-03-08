@@ -66,5 +66,14 @@ describe("Order Phases Path", () => {
 
     expect(scoopOptAgain).toHaveTextContent("0");
     expect(toppingOptAgain).not.toBeChecked();
+
+    // wait for items to appear so that Testing library doesnt throw erros about things happening after test is over
+    await screen.findByRole("spinbutton", {
+      name: /chocolate/i,
+    });
+
+    await screen.findByRole("checkbox", {
+      name: /hot fudge/i,
+    });
   });
 });

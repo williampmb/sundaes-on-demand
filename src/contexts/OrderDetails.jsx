@@ -62,13 +62,7 @@ function OrderDetailsProvider(props) {
         scoops: new Map(),
         toppings: new Map(),
       };
-      const resetTotals = {
-        scoops: formatCurrency(0),
-        toppings: formatCurrency(0),
-        grandTotal: formatCurrency(0),
-      };
       setOptionCounts(resetOptionCounts);
-      setTotals(resetTotals);
     }
 
     //getter: object containing options counts for scoops and toppings, subtotal and totals
