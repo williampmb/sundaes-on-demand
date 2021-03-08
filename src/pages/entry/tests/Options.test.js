@@ -1,5 +1,21 @@
+import userEvent from "@testing-library/user-event";
 import { render, screen } from "../../../test-utils/testing-library-utils";
 import Options from "../Options";
+
+describe("Dont update subtotals", () => {
+  it("Should not update the subtotals if it has invalid input", async () => {
+    render(<Options optionType="scoops" />);
+
+    const scoopInput = await screen.findByRole("spinbutton", {
+      name: /chocolate/i,
+    });
+    userEvent.clear(scoopInput);
+    userEvent.type(scoopInput, "-3");
+
+    const scoopSubtotal = screen.getByText("Scoops total: $0.00");
+    expect(scoopSubtotal).toBeInTheDocument();
+  });
+});
 
 describe("Scoops and Toppings Opts", () => {
   test("Should display image from each scoop opt from server", async () => {

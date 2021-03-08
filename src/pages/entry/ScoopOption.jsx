@@ -7,13 +7,16 @@ const ScoopOption = ({ name, imagePath, updateItemCount }) => {
   const [validInput, setValidInput] = useState(true);
   const handleChange = (event) => {
     let curValue = event.target.value;
-    updateItemCount(name, curValue);
 
     curValue = parseFloat(curValue);
 
-    setValidInput(
-      curValue >= 0 && curValue < 10 && Math.floor(curValue) === curValue
-    );
+    const isValidInput =
+      curValue >= 0 && curValue < 10 && Math.floor(curValue) === curValue;
+    setValidInput(isValidInput);
+
+    if (isValidInput) {
+      updateItemCount(name, curValue);
+    }
   };
 
   return (

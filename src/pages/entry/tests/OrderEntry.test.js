@@ -107,14 +107,14 @@ describe("Grand total tests", () => {
     expect(grandTotal).toHaveTextContent("0.00");
 
     userEvent.clear(chocolateScoop);
-    userEvent.type(chocolateScoop, "10");
+    userEvent.type(chocolateScoop, "9");
 
     userEvent.click(hotFugdeTopping);
 
-    expect(grandTotal).toHaveTextContent("21.50");
+    expect(grandTotal).toHaveTextContent("19.50");
 
     userEvent.click(hotFugdeTopping);
-    expect(grandTotal).toHaveTextContent("20.00");
+    expect(grandTotal).toHaveTextContent("18.00");
   });
 });
 
